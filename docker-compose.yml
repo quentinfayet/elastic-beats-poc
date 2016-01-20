@@ -1,0 +1,21 @@
+elasticsearch:
+  build: ./docker/elasticsearch
+  container_name: elasticsearch
+  volumes:
+    - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  ports:
+    - 9200:9200
+    - 9300:9300
+
+logstash:
+  build: ./docker/logstash
+  container_name: logstash
+  volumes:
+    - ./docker/logstash/config/logstash.conf:/logstash.conf
+
+kibana:
+  image: kibana:4
+  environment:
+    - ELASTICSEARCH_URL=http://elasticsearch:9200
+  ports:
+    - 5601:5601
